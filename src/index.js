@@ -86,10 +86,27 @@ function submitForm(event) {
   listSubmit(event);
 
   const taskForm = document.getElementById("create-task-form");
-
   taskForm.addEventListener('submit', event =>submitTask(event) );
 
+  listDiv.addEventListener('click', event => {
+    if(event.target.className === "delete-list"){
+      // debugger;
 
+      deleteTheList(event)
+    } else if (event.target.className === "delete-task") {
+
+    }
+
+
+  })
+
+}
+
+
+function deleteTheList(event) {
+  let listToDel = document.getElementById(`list ${event.target.dataset.title}`)
+  // debugger;
+  listToDel.remove();
 }
 
 function taskSubmit(event) {
@@ -120,12 +137,12 @@ function taskSubmit(event) {
 
 
   function listSubmit(event) {
-
+    let temp = "list "+userInput.value;
     let listHtml = `
-      <div id="lists">
-      <div>
+      <div id="lists"  >
+      <div id = "${temp}">
         <h2>${userInput.value}
-          <button data-title="${userInput.value}" class="delete-list">
+          <button data-title="${userInput.value}" class="delete-list" id="${userInput.value}">
             X
           </button>
         </h2>
