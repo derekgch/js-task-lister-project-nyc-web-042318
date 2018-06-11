@@ -29,28 +29,46 @@ document.addEventListener('DOMContentLoaded', () => {
     let selectedList = userList[selection.selectedIndex];
     const selectedElement = document.getElementById(`ul ${selectedList}`)
 
-    let newLI = document.createElement('li');
-    let newText = document.createElement('textNode');
-    let newP = document.createElement('textNode');
-    newText.innerText = `Task: ${taskDesc.value}`;
-    newLI.appendChild(newText);
-    let newBtn = document.createElement('button');
-    newBtn.className = "delete-task";
-    newBtn.innerText = "X";
-    newBtn.dataset.listTitle = selectedList;
-    newBtn.dataset.taskName = taskDesc;
+    if (uniqTask(taskDesc.value, selectedList)){
 
-    newLI.appendChild(newBtn);
-    newLI.innerHTML += "<br>";
+      let newLI = document.createElement('li');
+      let newText = document.createElement('textNode');
+      let newP = document.createElement('textNode');
 
-    newP.innerText = `Priority: ${taskP.value}`;
-    newLI.appendChild(newP);
+      if (taskP.value == "") {taskP.value = "LOW";}
 
-    selectedElement.appendChild(newLI);
+      newText.innerText = `Task: ${taskDesc.value}`;
+      newText.id = `${selectedList} ${taskDesc.value}`;
+      newLI.appendChild(newText);
 
+      let newBtn = document.createElement('button');
+      newBtn.className = "delete-task";
+      newBtn.innerText = "X";
+      newBtn.dataset.listTitle = selectedList;
+      newBtn.dataset.taskName = taskDesc;
+
+      newLI.appendChild(newBtn);
+      newLI.innerHTML += "<br>";
+
+      newP.innerText = `Priority: ${taskP.value}`;
+      newLI.appendChild(newP);
+
+      selectedElement.appendChild(newLI);
+
+      taskDesc.value = "";
+      taskP.value = "";
+    }else {
+      alert("Can't create same task!")
+    }
     // debugger;
   }
 
+
+function uniqTask(task,list) {
+  let temp = document.getElementById(`${list} ${task}`);
+  return temp ? false : true;
+  // debugger;
+}
 
 function generateOptions(e) {
   return `
