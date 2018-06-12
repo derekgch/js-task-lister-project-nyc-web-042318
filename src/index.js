@@ -38,14 +38,15 @@ document.addEventListener('DOMContentLoaded', () => {
       if (taskP.value == "") {taskP.value = "LOW";}
 
       newText.innerText = `Task: ${taskDesc.value}`;
-      newText.id = `${selectedList} ${taskDesc.value}`;
+      newLI.id = `${selectedList} ${taskDesc.value}`;
       newLI.appendChild(newText);
 
       let newBtn = document.createElement('button');
       newBtn.className = "delete-task";
       newBtn.innerText = "X";
       newBtn.dataset.listTitle = selectedList;
-      newBtn.dataset.taskName = taskDesc;
+      newBtn.dataset.taskName = taskDesc.value;
+      // newBtn.id = `Btn ${selectedList} ${taskDesc.value}`;
 
       newLI.appendChild(newBtn);
       newLI.innerHTML += "<br>";
@@ -91,25 +92,32 @@ function submitForm(event) {
   listDiv.addEventListener('click', event => {
     if(event.target.className === "delete-list"){
       // debugger;
-
-      deleteTheList(event)
+      deleteTheList(event);
     } else if (event.target.className === "delete-task") {
-
+      deleteTheTask(event);
     }
 
 
   })
 
 }
-function deleteTheTask() {
+function deleteTheTask(event) {
+
+  let taskToDel = document.getElementById(`${event.target.dataset.listTitle} ${event.target.dataset.taskName}`);
+  taskToDel.remove();
+  // debugger;
 
 }
 
 
 function deleteTheList(event) {
   let listToDel = document.getElementById(`list ${event.target.dataset.title}`)
-  debugger;
+  // debugger;
   userList.pop(userList.indexOf(event.target.dataset.title));
+  if(userList.length < 1){
+    const taskFromToDel = document.getElementById("create-task-form");
+    taskFromToDel.remove();
+  }
   listToDel.remove();
 }
 
