@@ -101,11 +101,15 @@ function submitForm(event) {
   })
 
 }
+function deleteTheTask() {
+
+}
 
 
 function deleteTheList(event) {
   let listToDel = document.getElementById(`list ${event.target.dataset.title}`)
-  // debugger;
+  debugger;
+  userList.pop(userList.indexOf(event.target.dataset.title));
   listToDel.remove();
 }
 
